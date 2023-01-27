@@ -59,4 +59,6 @@ simulate
 ### 4) Evaluate
 Depends on what characteristics of the sampling estimator we want.
 
-
+# Power analysis with simulation (in STATA)
+Power analysis calculator is specific to our estimate and research design. 
+> "This is feasible in experiments where a simple “we randomized the sample into two groups and measured an outcome” design covers thousands of cases. But for observational data where you’re working with dozens of variables, some unmeasured, it’s infeasible for the calculator-maker to guess your intentions ahead of time. That said, calculators work well for some causal inference designs too" (The Effect)
