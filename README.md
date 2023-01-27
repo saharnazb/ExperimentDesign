@@ -31,13 +31,13 @@ Examples of simulation in economics/econometrics: Power Analysis, Effect Size, S
 	  end
 ```
 
-### 2) Estimator 
+### 2. Estimator 
 - Decide what you are after:
 	- If it is the coefficient: ``` _b[varname] ``` after running the model
 	- google for anything else: how do I get STATISTIC (e.g. correlation, coefficient, standard error) from ANALYSIS/REGRESSION in STATA/ANY OTHER LANGUGAE
 - A function would be helpful because we will call this repeatedly
 
-### 3) Iteration 
+### 3. Iteration 
 > "As a rule of thumb, the more detail you want in your results, or the more variables there are in your estimation, the more you should run." (The Effect)
 Iterate using a for loop 
 ```stata
@@ -56,7 +56,7 @@ or
 simulate 
 ```
 
-### 4) Evaluate
+### 4. Evaluate
 Depends on what characteristics of the sampling estimator we want.
 
 # Power analysis with simulation (in STATA)
