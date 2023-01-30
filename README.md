@@ -23,7 +23,7 @@ The following is a summary of steps to follow based on the references at the end
 - normal random data: ``` rnormal() ```
 - categorical random data: ``` runiformint() ``` This gives equal chance for each category
 	- for binary data with a probability p of getting a 1: ``` rbinomial(1,p) ```
-- Use randomly defined variables to create another variable to have the causal relationship you want (A -> B)
+- Use randomly defined variables to create another variable to have the causal relationship you want (A &rarr; B)
 - Maybe an easy way to do this is to make a function for this because we want to run our simulation repeatedly:
 ``` stata
 	> capture program drop program_name // to ignore any error in dropping
@@ -64,12 +64,12 @@ Depends on what characteristics of the sampling estimator we want.
 # Power analysis with simulation (in STATA)
 Power analysis calculator is specific to our estimate and research design. 
 > "This is feasible in experiments where a simple “we randomized the sample into two groups and measured an outcome” design covers thousands of cases. But for observational data where you’re working with dozens of variables, some unmeasured, it’s infeasible for the calculator-maker to guess your intentions ahead of time. That said, calculators work well for some causal inference designs too" (The Effect book)
-If you are going to do a randomized experiment, you need to know/control your sample size before you start the experiment. In that casw, a power analysis would be illuminating. 
+If you are going to do a randomized experiment, you need to know/control your sample size before you start the experiment. In that case, a power analysis would be illuminating and what we need. 
 
 ***Example:***
 > "If we think the effect is probably A (effect size), and there’s B variation in X (var(X)), and there’s C variation in Y unrelated to X (var(Y)), and you want to have at least a D% chance of finding an effect (statistical precision) if it’s really there, then you’ll need a sample size of at least E."
 
-Holding four of these constant, the power analysis tells us the minimum acceptable value for the fifth element. I am doing that practice for sample size here. 
+Holding four of these constant, the power analysis tells us the minimum acceptable value for the fifth element. I am doing that practice for the sample size here. 
 ## Steps to calculate sample size
 1) Specify a hypothesis test 
 2) Specify the significance level of the test (e.g. ```alpha = 0.05```)
@@ -102,7 +102,7 @@ Holding four of these constant, the power analysis tells us the minimum acceptab
 	* Iterate
 		* We might try a bunch of different effect sizes or sample sizes
 		
-# REFERENCES
+# References
 Huntington-Klein, N. (2022). The effect: An introduction to research design and causality. Chapman and Hall/CRC.
 https://nickch-k.github.io/EconometricsSlides/Week_08/Power_Simulations_Stata.html
 https://www.theanalysisfactor.com/5-steps-for-calculating-sample-size/
