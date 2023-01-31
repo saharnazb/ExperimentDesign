@@ -29,24 +29,30 @@ Effect Size Calculation for Meta Analysis
 1. Assumptions:
 	- I assume there is single level in data: schools. We can augment state, district or other levels in data generating process (DGP) if needed.
 	- Schools are tracked before and after treatment (Panel data)
-	- Assignment to treated and control groups is assumed to be random. 
+	- Assignment to treated and control groups is assumed to be random. I am finding minimum sample size for a random experiment.
 	- Treatment happens at school level in the median year of total sample (mid-period under study; median of `T'). 
-	- We could add other covariates: Socioeconomic Status (SES), region variable (Locals of urban and rural), school size, etc. I am packing them all in one control variable. Uncomment any variable that is needed. We need to know what part of variation in y or teacher turnover is coming from each of these variables.
+	- We could add other covariates. I am packing them all in one control variable. We need to know what part of variation in y or teacher turnover is coming from each of covariates.
+	- Effect size is -0.2
 
-2. Start data generation with top level of the data hierarchy
+2. Start DGP with top level of the data hierarchy
 	- Start from district if we need to cluster schools in districts.
+	- If data is teacher level, start from school and then create teacher level ID and variables. 
 	- I only have one level: school/principal
 3. Create variables for the level ID and its random effect. 
-4. Expand the data.
+4. Expand the data (for the next level: teacher or time).
 5. Repeat steps 3 and 4 until the bottom level is reached.
 6. Start coding a function for estimation of a DID and mixed models.
 7. Start Coding iteration.
 8. Run the code and get results.
 ===============================================================================
 */
+*=====================================
+* Packages that might be needed 
+* Uncomment any of them needed
+*=====================================
+*ssc install egenmore 
 
 
-*ssc install egenmore // uncomment if needed. Some commands in this code might not work without this.
 
 set seed 10000 
 
@@ -67,12 +73,11 @@ program define create_data
 	   =====================================*/	
 		clear
 	
-		*local obs = `NS'*`T'
 		set obs `NS' // The number of observations that we want
 	
 		gen id = _n // schools
 		expand `T'
-		bysort id: generate t = _n // time - years
+		bysort id: generate t = _n // time dimention - years
 	
 	/* =====================================
 	   Create fixed effects 
@@ -105,19 +110,13 @@ program define create_data
 	/* =====================================
 	   Create independent variables
 	   =====================================*/	 
-		gen controls = rnormal() // I packed all control variables in one variable 
-		* gen X0 = rnormal(0.48, 0.14) // %FreeLunch
-		* gen X1 = runiform(0,1) // SES - based on %FreeLunch
-		* gen X2 = runiformint(0,1) // Locales: Urban (=0) and Rural (=1) only 
-		* gen X3 = runiformint(0,1) // Gender
-		* gen X4 = runiformint(0,1) <0.2 // %Minority Status
-		* gen X5 = rnormal(313,153) // SchoolSize
-		* gen X6 = rnormal(430,13) // reading
-		* gen X7 = rnormal(427,10) // math
+		gen controls = rnormal() // I packed all control variables in one variable. Create more covariates if needed. 
 		
 	/* =====================================
 	   Create error term
 	   =====================================*/	
+	   	* Abadie, Imbens, Wooldridge (2023) 
+		* Cluster if needed 
 		gen temp = rnormal() // temporary variable used to create individual FE
 		bysort id: egen C = first(temp) // indivudal FE; Clusters
 		drop temp
@@ -133,9 +132,6 @@ end
 *=====================================
 * Estimation Function
 *=====================================
-*h xtmixed
-*xtmixed Y T X1 X2 i.time || group: X2, vce(robust) mle
-
 capture program drop est_model
 program define est_model
 	local NS = `1'  
@@ -183,9 +179,8 @@ program define iterate
 			local coef = _b[1.treated#1.treat_time]
             matrix p = R["pvalue","1.treated#1.treat_time"]
 			local sig = 2*ttail(e(df_r),abs(_b[1.treated#1.treat_time]/_se[1.treated#1.treat_time])) <= .05
-            *local sig = p[1,1] < .05
-            *local sig = `p' < .05
-			replace coef_results = `coef' in `i'
+
+	    replace coef_results = `coef' in `i'
             replace sig_results = `sig' in `i'
         }
         
@@ -201,15 +196,16 @@ end
 * Set required values for iteration and the functions 
 foreach NS in 30 50 75 90 100 110 120 150 200 {
 	foreach T in 3 4 5 {
-		foreach effect in -.70 -.50 -.25 -.20 -.18 -.15 -.10 -.05 -.04 {
+		foreach effect in -.2 {
 			display "With a sample size of `NS'*`T' and an effect of `effect', the mean of sig_results is "
 			iterate `NS' `T' `effect' 1000
 			}
 		}
 	}
 
-*==============================================================================	
-* The sample should be between the two samle size numbers where the power passes 90%
+*===============================================================================================================
+* The sample should be between the two samle size numbers where the power passes 90% or 80% (researcher's choice)
+
 *=====================================
 * Examine results by some graphs
 *=====================================
