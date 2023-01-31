@@ -103,10 +103,10 @@ Holding four of these constant, the power analysis tells us the minimum acceptab
 		* We might try a bunch of different effect sizes or sample sizes
 		
 # References
-Huntington-Klein, N. (2022). The effect: An introduction to research design and causality. Chapman and Hall/CRC.
-Abadie, A., Athey, S., Imbens, G. W., & Wooldridge, J. M. (2023). When should you adjust standard errors for clustering?. The Quarterly Journal of Economics, 138(1), 1-35.
-https://nickch-k.github.io/EconometricsSlides/Week_08/Power_Simulations_Stata.html
-https://www.theanalysisfactor.com/5-steps-for-calculating-sample-size/
-https://www.youtube.com/watch?v=szNkh8Z7Op8
-https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/es-calc.html
-https://blog.stata.com/2014/07/18/how-to-simulate-multilevellongitudinal-data/
+Huntington-Klein, N. (2022). The effect: An introduction to research design and causality. Chapman and Hall/CRC.    
+Abadie, A., Athey, S., Imbens, G. W., & Wooldridge, J. M. (2023). When should you adjust standard errors for clustering?. The Quarterly Journal of Economics, 138(1), 1-35.     
+https://nickch-k.github.io/EconometricsSlides/Week_08/Power_Simulations_Stata.html    
+https://www.theanalysisfactor.com/5-steps-for-calculating-sample-size/    
+https://www.youtube.com/watch?v=szNkh8Z7Op8   
+https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/es-calc.html   
+https://blog.stata.com/2014/07/18/how-to-simulate-multilevellongitudinal-data/   
