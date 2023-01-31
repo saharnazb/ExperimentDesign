@@ -1,31 +1,6 @@
 
 /*
 ===============================================================================
-Power analysis with simulation for finding sample size (DiD estimation model)
-===============================================================================
-
-I calculated effect size in R:
-esc_beta(beta = -0.09,   # standardized regression coefficient = (b*Sx)/Sy = (-0.05*0.50)/0.26
-           sdy = 0.29,    # St.D. of predicted variable y; SE = sd/SQR(n) --> sd = SE * SQR(n) = 0.03*SQR(91) = 0.29
-           grp1n = 41,    # Number of treated schools
-           grp2n = 50,    # Number of control schools
-           es.type = "d") # convert to SMD
-
-This is the result:
-Effect Size Calculation for Meta Analysis
-
-     Conversion: standardized regression coefficient to effect size d
-    Effect Size:  -0.1796
- Standard Error:   0.2111
-       Variance:   0.0446
-       Lower CI:  -0.5934
-       Upper CI:   0.2342
-         Weight:  22.4379
-
-*/
-
-/*
-===============================================================================
 1. Assumptions:
 	- I assume there is single level in data: schools. We can augment state, district or other levels in data generating process (DGP) if needed.
 	- Schools are tracked before and after treatment (Panel data)
